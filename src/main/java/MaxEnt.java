@@ -116,8 +116,11 @@ public class MaxEnt {
             for (int i = 0; i < features.size(); i++) {
                 double z = 0;
                 for (int j = 0; j < functions.size(); j++) {
-                    z += w[j] * functions.get(j).apply(features.get(i), y);
+                	int hit = functions.get(j).apply(features.get(i), y);
+                	if(hit == 1) System.out.print(hit + " ");
+                    z += w[j] * hit;
                 }
+                System.out.println();
                 cond_prob[i][y] = Math.exp(z);
             }
         }
@@ -163,6 +166,7 @@ public class MaxEnt {
         return label;
     }
 
+    // 特征函数的经验分布
     private void calc_empirical_expects() {
 
         for (Instance instance : instances) {
